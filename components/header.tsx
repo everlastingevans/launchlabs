@@ -26,14 +26,14 @@ export function Header() {
     : { href: "/sponsors", label: siteConfig.ctas.sponsor, variant: "secondary" as const };
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-line bg-white/90 backdrop-blur-md">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-line bg-[#0A1B3D] backdrop-blur-md">
       <nav className="mx-auto flex max-w-7xl px-6 h-20 items-center justify-between" aria-label="Main navigation">
         
         {/* Brand Logo */}
         <Link href="/" className="focus-ring flex items-center rounded-md shrink-0">
-          <span className="flex h-10 w-32 items-center justify-center rounded-md bg-navy p-1.5 sm:w-36">
+          <span className="flex h-16 w-32 items-center justify-center p-1.5 sm:w-36">
             <Image 
-              src="/brand/launchpath-primary-logo.png" 
+              src="/brand/launchpath-main.png" 
               alt="LaunchPath Labs logo" 
               width={1665} 
               height={945} 
@@ -53,8 +53,8 @@ export function Header() {
                 key={item.href} 
                 href={item.href} 
                 className={cn(
-                  "focus-ring relative flex h-full items-center px-4 text-[14px] font-medium transition-colors duration-200 hover:text-navy",
-                  isActive ? "text-navy" : "text-slate/80"
+                  "focus-ring relative flex h-full items-center px-4 text-[14px] font-medium transition-colors duration-200 hover:text-[#C8FF7A]",
+                  isActive ? "text-[#A6F23C]" : "text-[#fff]"
                 )}
               >
                 {item.label}

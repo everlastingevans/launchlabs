@@ -13,10 +13,10 @@ export function ButtonLink({ href, children, variant = "primary", className }: B
     <Link
       href={href}
       className={cn(
-        "focus-ring inline-flex min-h-11 items-center justify-center rounded-md px-5 py-3 text-sm font-semibold transition",
+        "focus-ring inline-flex min-h-11 items-center justify-center rounded-full px-5 py-3 text-sm font-semibold transition",
         "hover:-translate-y-0.5",
-        variant === "primary" && "bg-lime text-navy shadow-card hover:bg-lime-light",
-        variant === "secondary" && "border border-line bg-white text-navy hover:border-lime hover:bg-lime/10",
+        variant === "primary" && "bg-lime text-navy shadow-card hover:bg-[#C8FF7A]",
+        variant === "secondary" && "border border-line bg-white text-navy hover:border-lime hover:bg-[#C8FF7A]",
         variant === "dark" && "bg-navy text-white shadow-card hover:bg-ink",
         variant === "ghost" && "text-navy hover:bg-white",
         className

@@ -36,7 +36,7 @@ export default function Home() {
       <section className="navy-panel brand-dots pt-32">
         <div className="container-px grid gap-10 py-16 lg:grid-cols-[1fr_0.9fr] lg:items-center lg:py-24">
           <div>
-            <p className="eyebrow border-white/15 bg-white/10 text-lime">12-week online founder accelerator</p>
+            <p className="eyebrow border-white/15 rounded-full bg-white/10 text-lime">12-week online founder accelerator</p>
             <h1 className="mt-6 max-w-5xl text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl">
               Stop guessing. Start building a business customers will pay for.
             </h1>
@@ -178,7 +178,7 @@ export default function Home() {
               funding, customers, procurement, investment, job creation or business success.
             </p>
           </div>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row lg:mt-0">
+          <div className="mt-8 flex flex-col gap-2 sm:flex-row lg:mt-0">
             <ButtonLink href="/apply">{founderCta}</ButtonLink>
             <ButtonLink href="/sponsors" variant="secondary">{siteConfig.ctas.sponsor}</ButtonLink>
           </div>

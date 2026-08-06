@@ -8,8 +8,8 @@ export function Footer() {
       <div className="container-px grid gap-10 py-12 lg:grid-cols-[1.1fr_0.9fr_0.9fr]">
         <div>
           <div className="flex items-center gap-3">
-            <span className="flex h-14 w-44 items-center justify-center rounded-md bg-navy p-2 ring-1 ring-white/15">
-              <Image src="/brand/launchpath-primary-logo.png" alt="LaunchPath Labs logo" width={1665} height={945} className="h-full w-full object-contain" />
+            <span className="flex h-20 w-44 items-center justify-center rounded-md bg-navy p-2">
+              <Image src="/brand/launchpath-main.png" alt="LaunchPath Labs logo" width={1665} height={945} className="h-full w-full object-contain" />
             </span>
           </div>
           <p className="mt-5 max-w-xl text-sm leading-7 text-slate-200">
