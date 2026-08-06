@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --navy: #0a1b3d;
+  --lime: #a6f23c;
+  --lime-light: #c8ff7a;
+  --offwhite: #f4f6fb;
+  --slate: #8894a3;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--offwhite);
+  color: #07152e;
+  font-family: Poppins, Inter, "Segoe UI", Arial, sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+@layer base {
+  a {
+    @apply underline-offset-4;
+  }
+
+  ::selection {
+    background: var(--lime-light);
+    color: var(--navy);
+  }
+}
+
+@layer components {
+  .container-px {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8;
+  }
+
+  .section-y {
+    @apply py-16 sm:py-20 lg:py-24;
+  }
+
+  .focus-ring {
+    @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lime;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-md border border-line bg-white px-3 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-navy shadow-card;
+  }
+
+  .card {
+    @apply rounded-md border border-line bg-white p-6 shadow-card;
+  }
+
+  .navy-panel {
+    @apply bg-navy text-white;
+  }
+
+  .brand-dots {
+    background-image: linear-gradient(rgba(10, 27, 61, 0.82), rgba(10, 27, 61, 0.9)), url("/brand/launchpath-dot-pattern.png");
+    background-position: center;
+    background-size: auto, 360px auto;
+  }
+
+  .lime-marker {
+    @apply flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-lime text-sm font-bold text-navy;
+  }
+
+  .input {
+    @apply mt-2 block w-full rounded-md border-line bg-white px-3 py-3 text-sm text-ink shadow-sm transition placeholder:text-slate focus:border-lime focus:ring-2 focus:ring-lime/60;
+  }
+
+  .label {
+    @apply text-sm font-semibold text-ink;
+  }
+}
