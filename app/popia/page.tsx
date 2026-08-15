@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/popia" }
 };
 
+
 export default function PopiaPage() {
   return (
     <section className="container-px section-y pt-32">
