@@ -12,10 +12,10 @@ export function ProgrammeSummary() {
   return (
     <dl className="grid gap-3 rounded-full border border-line bg-white p-4 shadow-card sm:grid-cols-2 lg:grid-cols-5">
       {summary.map((item) => (
-        <div key={item} className="flex items-center gap-3 rounded-full bg-offwhite p-3">
+        <div key={item} className="flex text-center items-center gap-3 rounded-full bg-offwhite p-3">
           <dt className="sr-only">Programme feature</dt>
-          <dd className="text-sm font-semibold leading-6 text-navy">
-            <span className="mr-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-lime text-[11px] font-bold">OK</span>
+          <dd className="text-[14px] text:center font-semibold leading-6 text-navy">
+            {/* <span className="mr-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-lime text-[11px] font-bold"></span> */}
             {item}
           </dd>
         </div>

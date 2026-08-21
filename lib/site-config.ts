@@ -1,9 +1,9 @@
 export const siteConfig = {
   name: "LaunchPath Labs",
   baseUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://launchpath.co.za",
-  tagline: "Building Entrepreneurs. Creating Jobs. Strengthening Communities.",
+  tagline: "R50,000 FOUNDER GRANT",
   description:
-    "LaunchPath Labs is a 12-week online founder accelerator helping early-stage South African entrepreneurs test demand, improve their offers, validate pricing and build active sales pipelines.",
+    "One business that successfully completes the Founding Cohort will be selected to receive R50,000 in grant funding.",
   contact: {
     email: "hello@launchpath.co.za",
     location: "Cape Town, South Africa",

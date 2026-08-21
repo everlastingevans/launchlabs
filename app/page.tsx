@@ -12,6 +12,7 @@ import { SectionHeading } from "@/components/section-heading";
 import { TypicalWeek } from "@/components/typical-week";
 import { homeFaqs } from "@/lib/faq";
 import { founderOutputs, siteConfig } from "@/lib/site-config";
+import FounderGrantSection from "@/components/Foundergrantsection";
 
 export const metadata: Metadata = {
   title: "LaunchPath Labs | 12-Week Founder Accelerator South Africa",
@@ -54,7 +55,8 @@ export default function Home() {
             <Link href="/sponsors" className="focus-ring mt-5 inline-flex rounded-md text-sm font-semibold text-lime hover:text-lime-light">
               Looking to support entrepreneurs? Sponsor a LaunchPath Labs cohort.
             </Link>
-            <p className="mt-8 text-sm font-semibold uppercase tracking-[0.16em] text-slate-200">{siteConfig.tagline}</p>
+            <h4 className="mt-10 text-[36px] font-semibold uppercase tracking-[0.16em] text-lime">{siteConfig.tagline}</h4>
+            <p className="mt-2 text-[16px] font-semibold tracking-[0.16em] text-slate-200">{siteConfig.description}</p>
           </div>
           <EditorialImage
             src="/photos/founder-laptop.jpg"
@@ -89,6 +91,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <FounderGrantSection/>
 
       <section className="bg-white">
         <div className="container-px section-y">
