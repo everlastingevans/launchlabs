@@ -9,7 +9,7 @@ const allowedTypes: SubmissionType[] = ["founder-application", "founder-interest
 function rateLimit(ip: string) {
   const now = Date.now();
   const windowMs = 10 * 60 * 1000;
-  const limit = 6;
+  const limit = 20;
   const current = submissions.get(ip);
 
   if (!current || current.resetAt < now) {

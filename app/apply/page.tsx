@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { FounderApplicationForm } from "@/components/forms";
-import { SectionHeading } from "@/components/section-heading";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { FounderApplicationForm } from "@/components/forms/founder-application-form";
 import { formatCurrency, siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {

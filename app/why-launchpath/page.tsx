@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { ButtonLink } from "@/components/button-link";
-import { EditorialImage } from "@/components/editorial-image";
-import { EvidenceCard } from "@/components/evidence-card";
-import { SectionHeading } from "@/components/section-heading";
+import { ButtonLink } from "@/components/ui/button-link";
+import { EditorialImage } from "@/components/ui/editorial-image";
+import { EvidenceCard } from "@/components/ui/evidence-card";
+import { SectionHeading } from "@/components/ui/section-heading";
 import { programmePrinciples, siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {

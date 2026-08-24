@@ -1,0 +1,6 @@
+{
+  "name": "LaunchPath Labs",
+  "description": "12-Week Online Founder Accelerator in South Africa helping early-stage entrepreneurs test demand, validate pricing, and build paying customers.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

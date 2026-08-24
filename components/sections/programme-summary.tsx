@@ -1,0 +1,24 @@
+import { siteConfig } from "@/lib/site-config";
+
+const summary = [
+  siteConfig.cohort.duration,
+  "National online delivery",
+  `${siteConfig.cohort.size} in the pilot cohort`,
+  `${siteConfig.cohort.commitment} of founder execution`,
+  siteConfig.cohort.followUp
+];
+
+export function ProgrammeSummary() {
+  return (
+    <dl className="grid gap-3 rounded-full border border-line bg-white p-4 shadow-card sm:grid-cols-2 lg:grid-cols-5">
+      {summary.map((item) => (
+        <div key={item} className="flex text-center items-center gap-3 rounded-full bg-offwhite p-3">
+          <dt className="sr-only">Programme feature</dt>
+          <dd className="text-[14px] text:center font-semibold leading-6 text-navy">
+            {item}
+          </dd>
+        </div>
+      ))}
+    </dl>
+  );
+}

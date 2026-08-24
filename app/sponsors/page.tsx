@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { ButtonLink } from "@/components/button-link";
-import { EditorialImage } from "@/components/editorial-image";
-import { EvidenceCard } from "@/components/evidence-card";
-import { FounderPrizeSection } from "@/components/founder-prize";
-import { SponsorEnquiryForm } from "@/components/forms";
-import { SectionHeading } from "@/components/section-heading";
+import { ButtonLink } from "@/components/ui/button-link";
+import { EditorialImage } from "@/components/ui/editorial-image";
+import { EvidenceCard } from "@/components/ui/evidence-card";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { SponsorEnquiryForm } from "@/components/forms/sponsor-enquiry-form";
+import { FounderPrizeSection } from "@/components/sections/founder-prize-section";
+import { BackerBanner } from "@/components/sections/backer-banner";
 import { formatCurrency, launchPathResponsibilities, siteConfig, sponsorAudience, sponsorInvolvement } from "@/lib/site-config";
 
 export const metadata: Metadata = {
@@ -54,6 +55,8 @@ export default function SponsorsPage() {
           <EditorialImage src="/photos/shopkeeper-market.jpg" alt="Entrepreneur operating a small market business" className="min-h-[26rem] border-white/15" priority />
         </div>
       </section>
+
+      <BackerBanner />
 
       <section className="container-px section-y">
         <SectionHeading title="Why this matters to sponsors" body="Many entrepreneurship initiatives transfer knowledge, but founders still need structured support to test whether the market cares." />

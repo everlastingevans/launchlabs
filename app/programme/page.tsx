@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { ButtonLink } from "@/components/button-link";
-import { CommercialEvidenceSection } from "@/components/commercial-evidence";
-import { EvidenceCard } from "@/components/evidence-card";
-import { FounderPrizeSection } from "@/components/founder-prize";
-import { LegalDisclaimer } from "@/components/legal-disclaimer";
-import { PricingBursarySection } from "@/components/pricing-bursary";
-import { ProgrammeTimeline } from "@/components/programme-timeline";
-import { SectionHeading } from "@/components/section-heading";
-import { TypicalWeek } from "@/components/typical-week";
+import { ButtonLink } from "@/components/ui/button-link";
+import { EvidenceCard } from "@/components/ui/evidence-card";
+import { LegalDisclaimer } from "@/components/ui/legal-disclaimer";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { CommercialEvidenceSection } from "@/components/sections/commercial-evidence-section";
+import { FounderPrizeSection } from "@/components/sections/founder-prize-section";
+import { PricingBursarySection } from "@/components/sections/pricing-bursary-section";
+import { ProgrammeTimeline } from "@/components/sections/programme-timeline";
+import { TypicalWeek } from "@/components/sections/typical-week";
 import { founderOutputs, siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {

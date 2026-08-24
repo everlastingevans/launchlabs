@@ -1,18 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ButtonLink } from "@/components/button-link";
-import { EditorialImage } from "@/components/editorial-image";
-import { EvidenceCard } from "@/components/evidence-card";
-import { FAQAccordion } from "@/components/faq-accordion";
-import { PathwayCards } from "@/components/pathway-cards";
-import { PricingBursarySection } from "@/components/pricing-bursary";
-import { ProgrammeSummary } from "@/components/programme-summary";
-import { ProgrammeTimeline } from "@/components/programme-timeline";
-import { SectionHeading } from "@/components/section-heading";
-import { TypicalWeek } from "@/components/typical-week";
+import { ButtonLink } from "@/components/ui/button-link";
+import { EditorialImage } from "@/components/ui/editorial-image";
+import { EvidenceCard } from "@/components/ui/evidence-card";
+import { FAQAccordion } from "@/components/ui/faq-accordion";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { FounderGrantSection } from "@/components/sections/founder-grant-section";
+import { BackerBanner } from "@/components/sections/backer-banner";
+import { PathwayCards } from "@/components/sections/pathway-cards";
+import { PricingBursarySection } from "@/components/sections/pricing-bursary-section";
+import { ProgrammeSummary } from "@/components/sections/programme-summary";
+import { ProgrammeTimeline } from "@/components/sections/programme-timeline";
+import { TypicalWeek } from "@/components/sections/typical-week";
 import { homeFaqs } from "@/lib/faq";
 import { founderOutputs, siteConfig } from "@/lib/site-config";
-import FounderGrantSection from "@/components/Foundergrantsection";
 
 export const metadata: Metadata = {
   title: "LaunchPath Labs | 12-Week Founder Accelerator South Africa",
@@ -37,6 +38,10 @@ export default function Home() {
       <section className="navy-panel brand-dots pt-32">
         <div className="container-px grid gap-10 py-16 lg:grid-cols-[1fr_0.9fr] lg:items-center lg:py-24">
           <div>
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-xs font-semibold tracking-wide text-white backdrop-blur-sm">
+              <span className="h-2 w-2 rounded-full bg-lime" aria-hidden="true" />
+              <span>Backed by Minara Chamber of Commerce</span>
+            </div>
             <p className="eyebrow border-white/15 rounded-full bg-white/10 text-lime">12-week online founder accelerator</p>
             <h1 className="mt-6 max-w-5xl text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl">
               Stop guessing. Start building a business customers will pay for.
@@ -70,6 +75,8 @@ export default function Home() {
         </div>
       </section>
 
+      <BackerBanner />
+
       <section className="container-px section-y grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
         <div>
           <SectionHeading title="Starting a business can feel busy without feeling like progress." />
@@ -91,7 +98,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <FounderGrantSection/>
+      <FounderGrantSection />
 
       <section className="bg-white">
         <div className="container-px section-y">

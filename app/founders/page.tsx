@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { ButtonLink } from "@/components/button-link";
-import { EditorialImage } from "@/components/editorial-image";
-import { EvidenceCard } from "@/components/evidence-card";
-import { FAQAccordion } from "@/components/faq-accordion";
-import { FounderPrizeSection } from "@/components/founder-prize";
-import { PricingBursarySection } from "@/components/pricing-bursary";
-import { SectionHeading } from "@/components/section-heading";
-import { TypicalWeek } from "@/components/typical-week";
+import { ButtonLink } from "@/components/ui/button-link";
+import { EditorialImage } from "@/components/ui/editorial-image";
+import { EvidenceCard } from "@/components/ui/evidence-card";
+import { FAQAccordion } from "@/components/ui/faq-accordion";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { FounderPrizeSection } from "@/components/sections/founder-prize-section";
+import { PricingBursarySection } from "@/components/sections/pricing-bursary-section";
+import { TypicalWeek } from "@/components/sections/typical-week";
 import { founderFaqs } from "@/lib/faq";
 import { founderOutputs, notPromised, siteConfig } from "@/lib/site-config";
 
