@@ -130,11 +130,23 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: `Please complete the required fields: ${errors.join(", ")}.` }, { status: 400 });
   }
 
+  const userAgent = request.headers.get("user-agent") || "";
+
   const result = await submitToAdapter({
     type: type as SubmissionType,
     submittedAt: new Date().toISOString(),
-    data: formData
+    data: formData,
+    ip,
+    userAgent
   });
 
-  return NextResponse.json({ message: result.message }, { status: result.ok ? 200 : 503 });
+  return NextResponse.json(
+    {
+      message: result.message,
+      id: result.id,
+      provider: result.provider,
+      persistedToDatabase: result.persistedToDatabase
+    },
+    { status: result.ok ? 200 : 503 }
+  );
 }

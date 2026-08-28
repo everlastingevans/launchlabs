@@ -1,0 +1,146 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum SubmissionStatus {
+  NEW
+  IN_REVIEW
+  ACCEPTED
+  WAITLISTED
+  REJECTED
+  ARCHIVED
+}
+
+model Submission {
+  id              BigInt            @id @default(autoincrement())
+  submissionType  String            @map("submission_type") @db.VarChar(64)
+  fullName        String            @map("full_name") @db.VarChar(255)
+  email           String            @db.VarChar(255)
+  mobile          String?           @db.VarChar(100)
+  businessName    String?           @map("business_name") @db.VarChar(255)
+  organisation    String?           @db.VarChar(255)
+  status          String            @default("new") @db.VarChar(50)
+  data            Json              @db.JsonB
+  ipAddress       String?           @map("ip_address") @db.VarChar(100)
+  userAgent       String?           @map("user_agent") @db.Text
+  notes           String?           @db.Text
+  createdAt       DateTime          @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt       DateTime          @default(now()) @updatedAt @map("updated_at") @db.Timestamptz()
+
+  // Relations to structured typed tables
+  founderApplication FounderApplication?
+  founderInterest    FounderInterest?
+  sponsorEnquiry     SponsorEnquiry?
+  contactMessage     ContactMessage?
+
+  @@index([submissionType, createdAt(sort: Desc)])
+  @@index([email])
+  @@index([status])
+  @@index([createdAt(sort: Desc)])
+  @@map("submissions")
+}
+
+model FounderApplication {
+  id                  BigInt      @id @default(autoincrement())
+  submissionId        BigInt      @unique @map("submission_id")
+  fullName            String      @map("full_name") @db.VarChar(255)
+  email               String      @db.VarChar(255)
+  mobile              String?     @db.VarChar(100)
+  city                String?     @db.VarChar(100)
+  province            String?     @db.VarChar(100)
+  businessName        String?     @map("business_name") @db.VarChar(255)
+  businessStage       String?     @map("business_stage") @db.VarChar(100)
+  industry            String?     @db.VarChar(100)
+  businessDescription String?     @map("business_description") @db.Text
+  problem             String?     @db.Text
+  targetCustomer      String?     @map("target_customer") @db.Text
+  currentRevenue      String?     @map("current_revenue") @db.VarChar(100)
+  currentEvidence     String?     @map("current_evidence") @db.Text
+  demandTests         String?     @map("demand_tests") @db.Text
+  mostNeedToProve     String?     @map("most_need_to_prove") @db.Text
+  teamSize            String?     @map("team_size") @db.VarChar(50)
+  weeklyCommitment    String?     @map("weekly_commitment") @db.VarChar(50)
+  customerAccess      String?     @map("customer_access") @db.VarChar(50)
+  goals               String?     @db.Text
+  placeType           String?     @map("place_type") @db.VarChar(100)
+  paymentOption       String?     @map("payment_option") @db.VarChar(100)
+  rawData             Json        @map("raw_data") @db.JsonB
+  createdAt           DateTime    @default(now()) @map("created_at") @db.Timestamptz()
+
+  submission          Submission  @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+
+  @@index([createdAt(sort: Desc)])
+  @@map("founder_applications")
+}
+
+model FounderInterest {
+  id            BigInt      @id @default(autoincrement())
+  submissionId  BigInt      @unique @map("submission_id")
+  fullName      String      @map("full_name") @db.VarChar(255)
+  email         String      @db.VarChar(255)
+  mobile        String?     @db.VarChar(100)
+  city          String?     @db.VarChar(100)
+  province      String?     @db.VarChar(100)
+  businessName  String?     @map("business_name") @db.VarChar(255)
+  businessStage String?     @map("business_stage") @db.VarChar(100)
+  goals         String?     @db.Text
+  rawData       Json        @map("raw_data") @db.JsonB
+  createdAt     DateTime    @default(now()) @map("created_at") @db.Timestamptz()
+
+  submission    Submission  @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+
+  @@index([createdAt(sort: Desc)])
+  @@map("founder_interests")
+}
+
+model SponsorEnquiry {
+  id                    BigInt      @id @default(autoincrement())
+  submissionId          BigInt      @unique @map("submission_id")
+  fullName              String      @map("full_name") @db.VarChar(255)
+  email                 String      @db.VarChar(255)
+  mobile                String?     @db.VarChar(100)
+  organisation          String?     @db.VarChar(255)
+  jobTitle              String?     @map("job_title") @db.VarChar(255)
+  organisationType      String?     @map("organisation_type") @db.VarChar(100)
+  region                String?     @db.VarChar(100)
+  sponsorFounderCount   String?     @map("sponsor_founder_count") @db.VarChar(50)
+  interest              String?     @db.VarChar(150)
+  supportType           String?     @map("support_type") @db.VarChar(150)
+  focusArea             String?     @map("focus_area") @db.VarChar(150)
+  meetingMethod         String?     @map("meeting_method") @db.VarChar(100)
+  reportingRequirements String?     @map("reporting_requirements") @db.Text
+  additionalContext     String?     @map("additional_context") @db.Text
+  rawData               Json        @map("raw_data") @db.JsonB
+  createdAt             DateTime    @default(now()) @map("created_at") @db.Timestamptz()
+
+  submission            Submission  @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+
+  @@index([createdAt(sort: Desc)])
+  @@map("sponsor_enquiries")
+}
+
+model ContactMessage {
+  id            BigInt      @id @default(autoincrement())
+  submissionId  BigInt      @unique @map("submission_id")
+  fullName      String      @map("full_name") @db.VarChar(255)
+  email         String      @db.VarChar(255)
+  mobile        String?     @db.VarChar(100)
+  enquiryType   String?     @map("enquiry_type") @db.VarChar(100)
+  message       String      @db.Text
+  rawData       Json        @map("raw_data") @db.JsonB
+  createdAt     DateTime    @default(now()) @map("created_at") @db.Timestamptz()
+
+  submission    Submission  @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+
+  @@index([createdAt(sort: Desc)])
+  @@map("contact_messages")
+}
