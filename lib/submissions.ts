@@ -214,8 +214,9 @@ export async function getSubmissionsFromDatabase(options: {
   limit?: number;
   offset?: number;
   search?: string;
+  status?: string;
 } = {}) {
-  const { type, limit = 50, offset = 0, search } = options;
+  const { type, limit = 100, offset = 0, search, status } = options;
   const hasDbConfig = !!getConnectionString();
 
   if (hasDbConfig) {
@@ -229,10 +230,15 @@ export async function getSubmissionsFromDatabase(options: {
         sqlQuery += ` AND submission_type = $${params.length}`;
       }
 
+      if (status && status !== "all") {
+        params.push(status);
+        sqlQuery += ` AND status = $${params.length}`;
+      }
+
       if (search) {
         params.push(`%${search}%`);
         const searchIdx = params.length;
-        sqlQuery += ` AND (full_name ILIKE $${searchIdx} OR email ILIKE $${searchIdx} OR business_name ILIKE $${searchIdx} OR organisation ILIKE $${searchIdx})`;
+        sqlQuery += ` AND (full_name ILIKE $${searchIdx} OR email ILIKE $${searchIdx} OR business_name ILIKE $${searchIdx} OR organisation ILIKE $${searchIdx} OR data::text ILIKE $${searchIdx})`;
       }
 
       sqlQuery += ` ORDER BY created_at DESC LIMIT $${params.length + 1} OFFSET $${params.length + 2}`;
@@ -240,23 +246,50 @@ export async function getSubmissionsFromDatabase(options: {
 
       const items = await query<Record<string, unknown>>(sqlQuery, params);
 
-      // Get count
+      // Total matching current filter
       let countQuery = `SELECT COUNT(*) as total FROM submissions WHERE 1=1`;
       const countParams: unknown[] = [];
       if (type && type !== "all") {
         countParams.push(type);
         countQuery += ` AND submission_type = $${countParams.length}`;
       }
+      if (status && status !== "all") {
+        countParams.push(status);
+        countQuery += ` AND status = $${countParams.length}`;
+      }
       if (search) {
         countParams.push(`%${search}%`);
-        countQuery += ` AND (full_name ILIKE $${countParams.length} OR email ILIKE $${countParams.length} OR business_name ILIKE $${countParams.length} OR organisation ILIKE $${countParams.length})`;
+        countQuery += ` AND (full_name ILIKE $${countParams.length} OR email ILIKE $${countParams.length} OR business_name ILIKE $${countParams.length} OR organisation ILIKE $${countParams.length} OR data::text ILIKE $${countParams.length})`;
       }
       const countRes = await query<{ total: string | number }>(countQuery, countParams);
       const total = Number(countRes[0]?.total || items.length);
 
+      // Aggregated counts by category for stats
+      const statsRes = await query<{ submission_type: string; count: string | number }>(
+        `SELECT submission_type, COUNT(*) as count FROM submissions GROUP BY submission_type`
+      );
+
+      const stats = {
+        all: 0,
+        applications: 0,
+        interests: 0,
+        sponsors: 0,
+        contacts: 0
+      };
+
+      statsRes.forEach((row) => {
+        const c = Number(row.count || 0);
+        stats.all += c;
+        if (row.submission_type === "founder-application") stats.applications += c;
+        if (row.submission_type === "founder-interest") stats.interests += c;
+        if (row.submission_type === "sponsor-enquiry") stats.sponsors += c;
+        if (row.submission_type === "general-contact") stats.contacts += c;
+      });
+
       return {
         items,
         total,
+        stats,
         databaseConnected: true
       };
     } catch (err) {
@@ -275,9 +308,21 @@ export async function getSubmissionsFromDatabase(options: {
       (s) =>
         String(s.data.fullName || "").toLowerCase().includes(q) ||
         String(s.data.email || "").toLowerCase().includes(q) ||
-        String(s.data.businessName || "").toLowerCase().includes(q)
+        String(s.data.businessName || "").toLowerCase().includes(q) ||
+        String(s.data.city || "").toLowerCase().includes(q) ||
+        String(s.data.province || "").toLowerCase().includes(q) ||
+        String(s.data.industry || "").toLowerCase().includes(q) ||
+        JSON.stringify(s.data).toLowerCase().includes(q)
     );
   }
+
+  const stats = {
+    all: memorySubmissionsLog.length,
+    applications: memorySubmissionsLog.filter((s) => s.type === "founder-application").length,
+    interests: memorySubmissionsLog.filter((s) => s.type === "founder-interest").length,
+    sponsors: memorySubmissionsLog.filter((s) => s.type === "sponsor-enquiry").length,
+    contacts: memorySubmissionsLog.filter((s) => s.type === "general-contact").length
+  };
 
   return {
     items: filtered.slice(offset, offset + limit).map((s) => ({
@@ -293,6 +338,7 @@ export async function getSubmissionsFromDatabase(options: {
       created_at: s.createdAt
     })),
     total: filtered.length,
+    stats,
     databaseConnected: false
   };
 }

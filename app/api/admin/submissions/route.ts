@@ -15,33 +15,59 @@ export async function GET(request: NextRequest) {
   }
 
   const type = searchParams.get("type") || "all";
+  const status = searchParams.get("status") || "all";
   const search = searchParams.get("search") || undefined;
-  const limit = Math.min(Number(searchParams.get("limit") || 50), 200);
+  const limit = Math.min(Number(searchParams.get("limit") || 100), 500);
   const offset = Number(searchParams.get("offset") || 0);
   const format = searchParams.get("format");
 
   try {
     const result = await getSubmissionsFromDatabase({
       type,
+      status,
       search,
       limit,
       offset
     });
 
     if (format === "csv") {
-      // Export as CSV
-      const headers = ["ID", "Type", "Full Name", "Email", "Mobile", "Business / Org", "Status", "Date"];
+      // Rich CSV export with contextual business & founder data
+      const headers = [
+        "ID",
+        "Submission Type",
+        "Full Name",
+        "Email",
+        "Mobile",
+        "Business Name",
+        "Organisation",
+        "City",
+        "Province",
+        "Stage",
+        "Industry",
+        "Monthly Revenue",
+        "Place Type",
+        "Status",
+        "Created At"
+      ];
       const csvRows = [
         headers.join(","),
         ...result.items.map((item) => {
-          const escape = (str: unknown) => `"${String(str || "").replace(/"/g, '""')}"`;
+          const escape = (str: unknown) => `"${String(str ?? "").replace(/"/g, '""')}"`;
+          const d = (item.data || {}) as Record<string, unknown>;
           return [
             escape(item.id),
             escape(item.submission_type),
             escape(item.full_name),
             escape(item.email),
             escape(item.mobile),
-            escape(item.business_name || item.organisation || ""),
+            escape(item.business_name || d.businessName || ""),
+            escape(item.organisation || d.organisation || ""),
+            escape(d.city || d.region || ""),
+            escape(d.province || ""),
+            escape(d.businessStage || d.organisationType || ""),
+            escape(d.industry || d.interest || ""),
+            escape(d.currentRevenue || d.budgetRange || ""),
+            escape(d.placeType || d.supportType || ""),
             escape(item.status),
             escape(item.created_at)
           ].join(",");
