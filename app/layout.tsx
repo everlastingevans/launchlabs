@@ -7,6 +7,8 @@ import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { siteConfig } from "@/lib/site-config";
+import { GoogleAnalytics } from "@next/third-parties/google";
+
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -44,6 +46,17 @@ export const metadata: Metadata = {
     shortcut: "/favicon.png",
     apple: "/favicon.png"
   }
+};
+
+export const metadata = {
+  title: "LaunchPath Recruitment",
+  description: "AI-Powered Recruitment and Job Readiness Platform",
+  icons: {
+    icon: "/icon.png",
+  },
+  verification: {
+    google: "iRvE4kw0JqCBgqSbF94O2MnA3AEvflXSUDvdYVCx9YM",
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -97,6 +110,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Footer />
         <Analytics />
         <SpeedInsights />
+        <GoogleAnalytics gaId="G-CGNB2H2D8P" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
       </body>
     </html>
