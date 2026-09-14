@@ -7,6 +7,8 @@ import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { siteConfig } from "@/lib/site-config";
+import { GoogleAnalytics } from "@next/third-parties/google";
+
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -14,13 +16,15 @@ const poppins = Poppins({
   display: "swap"
 });
 
+// 1. Remove BOTH old metadata blocks and replace them with this single one:
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.baseUrl),
   title: {
     default: "LaunchPath Labs | 12-Week Founder Accelerator South Africa",
     template: "%s | LaunchPath Labs"
   },
-  description: siteConfig.description,
+  // Merged: Using your updated platform description
+  description: "AI-Powered Recruitment and Job Readiness Platform", 
   robots:
     process.env.VERCEL_ENV === "preview"
       ? { index: false, follow: false, googleBot: { index: false, follow: false } }
@@ -30,21 +34,27 @@ export const metadata: Metadata = {
     locale: "en_ZA",
     siteName: siteConfig.name,
     title: "LaunchPath Labs",
-    description: siteConfig.description,
+    description: "AI-Powered Recruitment and Job Readiness Platform",
     images: [{ url: "/launchpath-social.png", width: 1200, height: 630, alt: "LaunchPath Labs" }]
   },
   twitter: {
     card: "summary_large_image",
     title: "LaunchPath Labs",
-    description: siteConfig.description,
+    description: "AI-Powered Recruitment and Job Readiness Platform",
     images: ["/launchpath-social.png"]
   },
   icons: {
-    icon: "/favicon.png",
-    shortcut: "/favicon.png",
-    apple: "/favicon.png"
-  }
+    icon: "/icon.png",       // Merged: Using your preferred /icon.png path
+    shortcut: "/icon.png",
+    apple: "/icon.png"
+  },
+  verification: {
+    google: "iRvE4kw0JqCBgqSbF94O2MnA3AEvflXSUDvdYVCx9YM", // Merged: Preserved your site ownership tag
+  },
 };
+
+
+
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const structuredData = {
@@ -97,6 +107,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Footer />
         <Analytics />
         <SpeedInsights />
+        <GoogleAnalytics gaId="G-CGNB2H2D8P" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
       </body>
     </html>
