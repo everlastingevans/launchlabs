@@ -1,0 +1,85 @@
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f4f6f8;
+  padding: 20px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 450px;
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.auth-card h1 {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.auth-card > p {
+  text-align: center;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.auth-card form {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-card label {
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #333;
+}
+
+.auth-card input {
+  padding: 12px;
+  margin-bottom: 18px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.auth-card input:focus {
+  outline: none;
+  border-color: #0070f3;
+}
+
+.auth-card button {
+  padding: 13px;
+  background: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.auth-card button:hover {
+  background: #005bb5;
+}
+
+.message {
+  margin-top: 15px;
+  text-align: center;
+  color: #d00000;
+}
+
+.account-link {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.account-link a {
+  color: #0070f3;
+  font-weight: bold;
+  text-decoration: none;
+}
