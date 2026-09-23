@@ -16,6 +16,14 @@ const users: User[] = [
   },
 ];
 
+async function ensureSeedUsers() {
+  const adminUser = users.find((user) => user.email === "admin@example.com");
+
+  if (adminUser && !adminUser.passwordHash) {
+    adminUser.passwordHash = await hashPassword("Admin123");
+  }
+}
+
 export async function hashPassword(password: string) {
   const data = new TextEncoder().encode(password);
 
@@ -35,7 +43,9 @@ export async function verifyPassword(
   return hashedPassword === passwordHash;
 }
 
-export function findUserByEmail(email: string) {
+export async function findUserByEmail(email: string) {
+  await ensureSeedUsers();
+
   return users.find(
     (user) => user.email === email.toLowerCase().trim()
   );
@@ -46,6 +56,13 @@ export async function createUser(
   email: string,
   password: string
 ) {
+  await ensureSeedUsers();
+
+  const existingUser = await findUserByEmail(email);
+  if (existingUser) {
+    throw new Error("User already exists");
+  }
+
   const passwordHash = await hashPassword(password);
 
   const user: User = {

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { createUser, findUserByEmail } from "@/app/lib/auth-store";
 
 export async function POST(req: Request) {
   try {
@@ -6,7 +7,6 @@ export async function POST(req: Request) {
 
     const { name, email, password } = body;
 
-    // Check name
     if (!name || typeof name !== "string") {
       return NextResponse.json(
         { error: "Name is required" },
@@ -14,7 +14,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Check email
     if (
       !email ||
       typeof email !== "string" ||
@@ -26,7 +25,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Check password
     if (
       !password ||
       typeof password !== "string" ||
@@ -38,15 +36,15 @@ export async function POST(req: Request) {
       );
     }
 
-    // Create a user
-    const user = {
-      id: crypto.randomUUID(),
-      name: name.trim(),
-      email: email.toLowerCase().trim(),
-      password: password,
-      role: "USER",
-      createdAt: new Date().toISOString(),
-    };
+    const existingUser = await findUserByEmail(email);
+    if (existingUser) {
+      return NextResponse.json(
+        { error: "An account with that email already exists" },
+        { status: 409 }
+      );
+    }
+
+    const user = await createUser(name, email, password);
 
     console.log("New user created:", {
       id: user.id,
@@ -72,8 +70,18 @@ export async function POST(req: Request) {
     console.error("Signup error:", error);
 
     return NextResponse.json(
-      { error: "Something went wrong during signup" },
-      { status: 500 }
+      {
+        error:
+          error instanceof Error && error.message === "User already exists"
+            ? "An account with that email already exists"
+            : "Something went wrong during signup",
+      },
+      {
+        status:
+          error instanceof Error && error.message === "User already exists"
+            ? 409
+            : 500,
+      }
     );
   }
 }
